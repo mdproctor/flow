@@ -6,6 +6,44 @@
 
 ---
 
+## Repository Role
+
+Deployable microservice for running CaseHub's goal-driven coordination engine — shared context, autonomous workers, milestones, goals, and event-driven execution. Provides a standalone Quarkus application with REST endpoints wrapping `casehub-engine`.
+
+**GitHub:** [mdproctor/flow](https://github.com/mdproctor/flow)
+**Tier:** Integration (pending platform coherence analysis — see casehubio/parent#78)
+
+---
+
+## Build Commands
+
+```bash
+# Build and install
+mvn --batch-mode install
+
+# Skip tests
+mvn --batch-mode install -DskipTests
+```
+
+---
+
+## Work Tracking
+
+**Issue tracking:** enabled
+**GitHub repo:** mdproctor/flow
+**Note:** GitHub Issues are disabled on this repo — reference work items via casehubio/parent issues where applicable.
+
+---
+
+## Development Workflow
+
+Before designing: `superpowers:brainstorming`
+Before implementing: `superpowers:test-driven-development`
+For all Java work: `java-dev`
+Before committing: `superpowers:requesting-code-review`
+
+---
+
 ## Routing
 
 | Artifact   | Destination | Notes |
