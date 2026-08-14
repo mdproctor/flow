@@ -1,10 +1,14 @@
-import { hostPanel } from "@casehubio/pages-ui";
-import { registerPanel } from "@casehubio/pages-runtime";
-import "@casehubio/blocks-ui-case-explorer";
+import { rows, columns, dataTable, title } from "@casehubio/pages-ui";
+import { lookup, col, groupBy } from "@casehubio/pages-ui";
 
-registerPanel("case-explorer", "blocks-case-explorer");
-
-export const casesView = hostPanel("case-explorer", {
-  entityTypes: "all-presets",
-  endpoint: "/api/v1",
-});
+export const casesView = rows(
+  dataTable({
+    lookup: lookup("cases", groupBy(null,
+      col("caseId"), col("name"), col("status"),
+      col("namespace"), col("version"), col("createdAt"),
+    )),
+    sortable: true,
+    filter: { enabled: true },
+    selectionTopic: "case",
+  }),
+);

@@ -9,7 +9,7 @@ registerPanel("preferences-editor", "blocks-preferences-editor");
 
 export const systemView = tabs(
   ["Definitions", hostPanel("case-definition-browser", {
-    endpoint: "/api/v1/definitions",
+    endpoint: "/api/v1/case-definitions",
   })],
   ["Preferences", hostPanel("preferences-editor", {
     endpoint: "/api/preferences",

@@ -86,8 +86,8 @@ create_case() {
   body=$(jq -n --arg ns "$namespace" --arg nm "$name" --arg v "$version" --argjson ctx "$context" \
     '{definition: {namespace: $ns, name: $nm, version: $v}, context: $ctx}')
   RESULT=$(api POST /api/v1/cases -d "$body")
-  if echo "$RESULT" | jq -e '.id' > /dev/null 2>&1; then
-    CASE_ID=$(echo "$RESULT" | jq -r '.id')
+  if echo "$RESULT" | jq -e '.id // .caseId' > /dev/null 2>&1; then
+    CASE_ID=$(echo "$RESULT" | jq -r '.id // .caseId')
     log "  ✓ Case #$CASE_ID: $namespace/$name ${label:+($label)}"
   else
     warn "  ⚠ $namespace/$name: $(echo "$RESULT" | jq -r '.detail // .message // "unknown error"' 2>/dev/null)"
@@ -117,8 +117,8 @@ create_workitem() {
   body=$(jq -n --arg t "$title" --arg ty "$type" --arg p "$priority" \
     '{title: $t, type: $ty, priority: $p}')
   RESULT=$(api POST /workitems -d "$body")
-  if echo "$RESULT" | jq -e '.id' > /dev/null 2>&1; then
-    WI_ID=$(echo "$RESULT" | jq -r '.id')
+  if echo "$RESULT" | jq -e '.id // .caseId' > /dev/null 2>&1; then
+    WI_ID=$(echo "$RESULT" | jq -r '.id // .caseId')
     log "  ✓ $WI_ID: $title [$priority]"
   else
     warn "  ⚠ $title: $(echo "$RESULT" | jq -r '.detail // .message // .error // "unknown"' 2>/dev/null)"
