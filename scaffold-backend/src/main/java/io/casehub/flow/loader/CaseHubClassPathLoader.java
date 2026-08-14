@@ -32,7 +32,6 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -191,10 +190,7 @@ public class CaseHubClassPathLoader {
             CaseHub caseHub = instantiate(caseHubClass);
             CaseDefinition definition = caseHub.getDefinition();
 
-            caseDefinitionRegistry
-                    .registerCaseDefinition(definition)
-                    .await()
-                    .atMost(Duration.ofSeconds(10));
+            caseDefinitionRegistry.registerCaseDefinition(definition);
 
             LOG.infof(
                     "Registered CaseHub class: %s -> %s/%s v%s",

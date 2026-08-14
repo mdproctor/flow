@@ -32,7 +32,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -130,10 +129,7 @@ public class YamlCaseDefinitionLoader {
 
       CaseDefinition definition = CaseDefinitionYamlMapper.load(is);
 
-      caseDefinitionRegistry
-          .registerCaseDefinition(definition)
-          .await()
-          .atMost(Duration.ofSeconds(10));
+      caseDefinitionRegistry.registerCaseDefinition(definition);
 
       LOG.infof(
           "Registered YAML case definition: %s/%s v%s from %s",

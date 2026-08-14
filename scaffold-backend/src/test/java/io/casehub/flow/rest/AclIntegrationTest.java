@@ -3,7 +3,6 @@ package io.casehub.flow.rest;
 import io.casehub.flow.profile.JwtAclTestProfile;
 import io.casehub.platform.api.acl.AccessControlProvider;
 import io.casehub.platform.api.acl.AclAction;
-import io.casehub.platform.api.acl.AclResourceType;
 import io.casehub.platform.api.identity.CurrentPrincipal;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.ManagedContext;
@@ -85,7 +84,7 @@ class AclIntegrationTest {
   @Test
   @Disabled("scaffold#37 — Vert.x event loop blocking")
   void testAllowReadDefinitionAfterGrant() {
-    String resourceId = AclResourceType.CASE_DEFINITION + ":allow-ns/allow-def";
+    String resourceId = "CASE_DEFINITION" + ":allow-ns/allow-def";
     grant(ACTOR_ID, resourceId, AclAction.READ);
 
     given()
@@ -234,7 +233,7 @@ class AclIntegrationTest {
   @OidcSecurity(claims = @Claim(key = "tenancyId", value = "jwt-tenant"))
   @Disabled("scaffold#37 — Vert.x event loop blocking")
   void testAllowAfterGrantWithJwtIdentity() {
-    String resourceId = AclResourceType.CASE_DEFINITION + ":jwt-ns/jwt-def";
+    String resourceId = "CASE_DEFINITION" + ":jwt-ns/jwt-def";
     grant("jwt-actor", resourceId, AclAction.READ);
 
     given()
@@ -251,7 +250,7 @@ class AclIntegrationTest {
   private static final String DEF_NAME = "YAML Test Case";
   private static final String DEF_VERSION = "1.0.0";
   private static final String DEF_RESOURCE =
-      AclResourceType.CASE_DEFINITION + ":" + DEF_NS + "/" + DEF_NAME;
+      "CASE_DEFINITION" + ":" + DEF_NS + "/" + DEF_NAME;
 
   private String startCaseAsJwtActor() {
     grant(JWT_ACTOR, DEF_RESOURCE, AclAction.WRITE);
@@ -271,7 +270,7 @@ class AclIntegrationTest {
             .extract()
             .path("caseId");
 
-    String caseResource = AclResourceType.CASE + ":" + caseId;
+    String caseResource = "CASE" + ":" + caseId;
     grant(JWT_ACTOR, caseResource, AclAction.READ);
     grant(JWT_ACTOR, caseResource, AclAction.WRITE);
     grant(JWT_ACTOR, caseResource, AclAction.ADMIN);

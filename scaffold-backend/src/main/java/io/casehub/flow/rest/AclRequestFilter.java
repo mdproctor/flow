@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.casehub.engine.rest.dto.ProblemDetail;
 import io.casehub.platform.api.acl.AccessControlProvider;
 import io.casehub.platform.api.acl.AclAction;
-import io.casehub.platform.api.acl.AclResourceType;
 import io.casehub.platform.api.identity.CurrentPrincipal;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -43,7 +42,7 @@ public class AclRequestFilter {
     AclAction action;
 
     if (caseId != null) {
-      resourceId = AclResourceType.CASE + ":" + caseId;
+      resourceId = "CASE" + ":" + caseId;
       if (path.endsWith("/cancel")) {
         action = AclAction.ADMIN;
       } else if ("GET".equals(method)) {
@@ -52,7 +51,7 @@ public class AclRequestFilter {
         action = AclAction.WRITE;
       }
     } else if (namespace != null && name != null) {
-      resourceId = AclResourceType.CASE_DEFINITION + ":" + namespace + "/" + name;
+      resourceId = "CASE_DEFINITION" + ":" + namespace + "/" + name;
       action = AclAction.READ;
     } else if ("POST".equals(method) && path.equals("api/v1/cases")) {
       try {
@@ -63,7 +62,7 @@ public class AclRequestFilter {
         String nm = def.path("name").asText(null);
         ctx.setEntityStream(new ByteArrayInputStream(body));
         if (ns == null || nm == null) return null;
-        resourceId = AclResourceType.CASE_DEFINITION + ":" + ns + "/" + nm;
+        resourceId = "CASE_DEFINITION" + ":" + ns + "/" + nm;
         action = AclAction.WRITE;
       } catch (Exception e) {
         return null;
