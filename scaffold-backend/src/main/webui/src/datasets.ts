@@ -12,8 +12,8 @@ function rest(id: string, url: string, opts?: {
 
 export function createDatasets(modules: string[]) {
   const datasets = [
-    rest("cases", "/api/v1/cases", { refreshTime: "10second" }),
-    rest("case-definitions", "/api/v1/definitions"),
+    rest("cases", "/api/v1/cases", { dataPath: "items", refreshTime: "10second" }),
+    rest("case-definitions", "/api/v1/case-definitions", { dataPath: "items" }),
     rest("workers", "/api/v1/workers", { refreshTime: "10second" }),
     rest("work-items", "/workitems", { refreshTime: "5second" }),
     rest("queues", "/queues", { refreshTime: "10second" }),
